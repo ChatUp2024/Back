@@ -27,7 +27,7 @@ public class SecurityConfig {
         final MvcRequestMatcher.Builder requestMatcher = new MvcRequestMatcher.Builder(introspector);
 
         httpSecurity
-                .cors(cors -> cors.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
