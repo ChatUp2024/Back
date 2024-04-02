@@ -1,5 +1,6 @@
 package com.chatup.back.config;
 
+import com.chatup.back.oauth.Oauth2UserService;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,6 +22,7 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 public class SecurityConfig {
 
     private final ConfigEnv env;
+    private final Oauth2UserService oauth2UserService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -40,6 +42,10 @@ public class SecurityConfig {
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
+                )
+                .oauth2Login(oauth -> oauth
+                        .userInfoEndpoint(user -> user.userService(oauth2UserService))
+                        .defaultSuccessUrl(env.getFrontUrlDomain())
                 )
         ;
         return httpSecurity.build();
