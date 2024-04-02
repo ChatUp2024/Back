@@ -40,7 +40,8 @@ public class SecurityConfig {
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
-                );
+                )
+        ;
         return httpSecurity.build();
     }
 
@@ -51,6 +52,7 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(Arrays.asList(env.getFrontUrlLocal(), env.getFrontUrlDomain()));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
